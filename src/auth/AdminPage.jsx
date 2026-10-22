@@ -239,7 +239,7 @@ export default function AdminPage() {
           <div><span className="section-kicker">CONFIGURAÇÕES DO CARDÁPIO</span><h3>Adicional de borda recheada</h3><p>O valor é usado no cálculo dos pedidos de pizza.</p></div>
           <label>Valor (R$)<input type="number" min="0" step="0.01" value={borderPrice} onChange={(e) => setBorderPrice(e.target.value)} required/></label>
           <button className="admin-secondary" type="submit" disabled={savingSettings}>{savingSettings ? "Salvando…" : "Atualizar valor"}</button>
-        </form>
+        </form>}
       </section>
     </div>
   </main>;
