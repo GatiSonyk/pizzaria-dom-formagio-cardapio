@@ -10,6 +10,10 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     let active = true;
+    if (!supabase) {
+      setLoading(false);
+      return () => { active = false; };
+    }
 
     async function loadProfile(user) {
       if (!user) {
@@ -22,6 +26,7 @@ export function AuthProvider({ children }) {
         .eq("id", user.id)
         .maybeSingle();
       if (active) {
+        if (error) console.error("Falha ao carregar perfil:", error.message);
         setProfile(error ? null : data);
       }
     }
@@ -32,6 +37,11 @@ export function AuthProvider({ children }) {
       setSession(data?.session ?? null);
       await loadProfile(data?.session?.user ?? null);
       if (active) setLoading(false);
+    }).catch((error) => {
+      if (active) {
+        console.error("Falha ao inicializar autenticação:", error);
+        setLoading(false);
+      }
     });
 
     const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
@@ -58,10 +68,15 @@ export function AuthProvider({ children }) {
     user: session?.user ?? null,
     profile,
     loading,
-    signIn: (email, password) => supabase.auth.signInWithPassword({ email, password }),
-    signOut: () => supabase.auth.signOut(),
+    configured: Boolean(supabase),
+    signIn: (email, password) => supabase
+      ? supabase.auth.signInWithPassword({ email, password })
+      : Promise.resolve({ error: new Error("Supabase não está configurado neste ambiente.") }),
+    signOut: () => supabase
+      ? supabase.auth.signOut()
+      : Promise.resolve({ error: null }),
     refreshProfile: async () => {
-      if (!session?.user) return;
+      if (!supabase || !session?.user) return;
       const { data, error } = await supabase.from("profiles")
         .select("id, full_name, role").eq("id", session.user.id).maybeSingle();
       if (!error) setProfile(data);
