@@ -19,6 +19,7 @@ export default function AdminPage() {
   const [selectedId, setSelectedId] = useState(null);
   const [draft, setDraft] = useState(blankDraft);
   const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [borderPrice, setBorderPrice] = useState("18.00");
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -26,6 +27,13 @@ export default function AdminPage() {
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("Todas");
+
+  useEffect(() => {
+    if (!imageFile) { setImagePreview(null); return undefined; }
+    const url = URL.createObjectURL(imageFile);
+    setImagePreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [imageFile]);
 
   const loadCatalog = useCallback(async () => {
     if (!supabase || !canManage) return;
@@ -50,7 +58,7 @@ export default function AdminPage() {
       setBorderPrice(String(settingsResult.data.border_addon_price));
     }
     setLoading(false);
-  }, [canManage, selectedId]);
+  }, [canManage]);
 
   useEffect(() => { loadCatalog(); }, [loadCatalog]);
 
@@ -210,7 +218,7 @@ export default function AdminPage() {
 
           <div className="admin-section-title"><ImagePlus size={18}/><h3>Foto do produto</h3></div>
           <div className="admin-image-upload">
-            <div className="admin-image-preview">{(imageFile || draft.image_url) ? <img src={imageFile ? URL.createObjectURL(imageFile) : draft.image_url} alt="Prévia do produto"/> : <div><ImagePlus size={30}/><span>Nenhuma foto enviada</span></div>}</div>
+            <div className="admin-image-preview">{(imageFile || draft.image_url) ? <img src={imageFile ? imagePreview : draft.image_url} alt="Prévia do produto"/> : <div><ImagePlus size={30}/><span>Nenhuma foto enviada</span></div>}</div>
             <div className="admin-upload-copy"><p>Envie uma foto real do produto. Formatos JPG, PNG ou WebP, até 5 MB.</p><label className="admin-upload-button"><Upload size={16}/> Escolher foto<input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => setImageFile(e.target.files?.[0] || null)}/></label>{imageFile && <button type="button" className="admin-text-button" onClick={() => setImageFile(null)}>Cancelar nova foto</button>}</div>
           </div>
 
@@ -227,7 +235,7 @@ export default function AdminPage() {
           <div className="admin-save-row"><button className="auth-submit" type="submit" disabled={saving}><Save size={17}/>{saving ? "Salvando…" : "Salvar produto"}</button><button type="button" className="admin-secondary" onClick={newProduct}>Cancelar</button></div>
         </form>
 
-        <form className="admin-settings" onSubmit={saveSettings}>
+        {profile?.role === "administrador" && <form className="admin-settings" onSubmit={saveSettings}>
           <div><span className="section-kicker">CONFIGURAÇÕES DO CARDÁPIO</span><h3>Adicional de borda recheada</h3><p>O valor é usado no cálculo dos pedidos de pizza.</p></div>
           <label>Valor (R$)<input type="number" min="0" step="0.01" value={borderPrice} onChange={(e) => setBorderPrice(e.target.value)} required/></label>
           <button className="admin-secondary" type="submit" disabled={savingSettings}>{savingSettings ? "Salvando…" : "Atualizar valor"}</button>
