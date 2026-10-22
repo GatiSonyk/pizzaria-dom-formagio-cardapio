@@ -66,3 +66,7 @@
 .admin-muted{margin:12px 16px}
 @media(max-width:900px){.admin-header{grid-template-columns:1fr 1fr}.admin-heading{grid-column:1/-1;grid-row:1}.admin-back{grid-row:2}.admin-user{grid-row:2}.admin-layout{grid-template-columns:270px minmax(0,1fr);gap:14px;padding:0 14px}.admin-settings{grid-template-columns:1fr 130px}.admin-settings button{grid-column:1/-1}}
 @media(max-width:650px){.admin-header{padding:18px 16px;gap:14px}.admin-heading h1{font-size:29px}.admin-user{font-size:10px}.admin-user span{max-width:145px}.admin-layout{grid-template-columns:1fr;padding:0 12px;margin-top:14px}.admin-sidebar{position:static;max-height:360px}.admin-product-list{max-height:245px}.admin-editor{padding:17px}.admin-form-grid{grid-template-columns:1fr}.admin-form-grid label.full{grid-column:auto}.admin-image-upload{grid-template-columns:110px minmax(0,1fr);gap:12px}.admin-image-preview{height:105px}.admin-editor-title h2{font-size:24px}.admin-settings{grid-template-columns:1fr}.admin-settings button{grid-column:auto}.admin-save-row{flex-wrap:wrap}.admin-save-row .auth-submit{flex:1}}
+
+.admin-access-link{font-size:10px;color:#d9bb78;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.admin-access-link:hover{color:#fff1c9}
+@media(max-width:650px){.admin-access-link{order:4}}
