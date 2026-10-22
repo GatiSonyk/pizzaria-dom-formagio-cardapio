@@ -51,7 +51,8 @@ const ITEMS=[
 {id:44,name:"Heineken Long Neck 330 ml",category:"Bebidas",description:"Cerveja Heineken, long neck 330 ml."},
 {id:45,name:"Brahma 473 ml",category:"Bebidas",description:"Cerveja Brahma, lata 473 ml."}
 ];
-const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});\nconst CATEGORY_IMAGES={Tradicionais:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80",Especiais:"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80",Doces:"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80",Bebidas:"https://images.unsplash.com/photo-1532634896-26909d0d4b0a?auto=format&fit=crop&w=900&q=80"};
+const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+const CATEGORY_IMAGES={Tradicionais:"https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80",Especiais:"https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80",Doces:"https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80",Bebidas:"https://images.unsplash.com/photo-1532634896-26909d0d4b0a?auto=format&fit=crop&w=900&q=80"};
 const priceFor=(p,size)=>PRICES[p.category]?.[size]??null;
 export default function App(){
 const [cat,setCat]=useState("Todas"),[query,setQuery]=useState(""),[cart,setCart]=useState([]),[open,setOpen]=useState(false),[size,setSize]=useState("Grande"),[name,setName]=useState(""),[address,setAddress]=useState(""),[notes,setNotes]=useState(""),[notice,setNotice]=useState(""),[border,setBorder]=useState(false);
