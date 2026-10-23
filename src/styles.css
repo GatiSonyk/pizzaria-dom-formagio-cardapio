@@ -40,3 +40,13 @@
 .pizza-config-actions .gold-button:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .flavor-rule{font-size:10px;color:#858276;line-height:1.6}
 @media(max-width:600px){.flavor-hint{width:100%;margin:5px 0 0}.pizza-config-backdrop{padding:10px;align-items:flex-start}.pizza-config{max-height:calc(100vh - 20px);margin:auto 0}.pizza-config-head{padding:18px}.pizza-config-body{padding:18px}.pizza-config-head h2{font-size:26px}.pizza-config-actions{flex-direction:column-reverse;align-items:stretch}.pizza-config-actions button{width:100%}}
+
+
+/* Navegação do cardápio: Pizza > Modelos > Tamanho */
+.pizza-model-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:-5px 0 16px;padding:12px 14px;background:#f5efe3;border:1px solid #ebe0cc;border-radius:6px}
+.pizza-model-label{font-size:10px;font-weight:700;letter-spacing:.13em;color:#aa8848;margin-right:5px}
+.pizza-model-button{border:1px solid #dfd7c7;background:#fffdf8;color:#6f7468;border-radius:22px;padding:8px 14px;font-size:10px;transition:background .2s,border-color .2s,color .2s}
+.pizza-model-button:hover,.pizza-model-button.selected{background:var(--green);border-color:var(--green);color:#fff}
+.size-note{padding:0 1px}
+.size-note>span:first-child{font-weight:600;color:#4e5c4c}
+@media(max-width:600px){.pizza-model-row{gap:6px;padding:10px;margin:-3px 0 14px}.pizza-model-label{width:100%;margin:0 0 2px}.pizza-model-button{padding:8px 11px;font-size:10px}.flavor-hint{width:100%;margin:4px 0 0}}
