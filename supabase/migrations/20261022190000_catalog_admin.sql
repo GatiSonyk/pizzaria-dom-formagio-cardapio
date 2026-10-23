@@ -184,5 +184,3 @@ insert into public.products (slug,name,category,description,price_large,price_me
 ('heineken-long-neck-330ml','Heineken Long Neck 330 ml','Bebidas','Cerveja Heineken, long neck 330 ml.',null,null,null,null,44),
 ('brahma-473ml','Brahma 473 ml','Bebidas','Cerveja Brahma, lata 473 ml.',null,null,null,null,45)
 on conflict (slug) do nothing;
-
-alter table storage.objects enable row level security;
