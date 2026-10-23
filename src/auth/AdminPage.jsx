@@ -47,12 +47,12 @@ export default function AdminPage() {
       setError("Não foi possível carregar os produtos. Confirme se a migração do catálogo já foi aplicada ao Supabase. " + productsResult.error.message);
     } else {
       setProducts(productsResult.data || []);
-      if (!selectedId && productsResult.data?.length) {
-        setSelectedId(productsResult.data[0].id);
-      } else if (selectedId && !productsResult.data?.some((item) => item.id === selectedId)) {
-        setSelectedId(null);
-        setDraft(blankDraft());
-      }
+      // Start with a blank form; never silently select the first product for editing.
+      setSelectedId((current) => (
+        current !== null && !productsResult.data?.some((item) => item.id === current)
+          ? null
+          : current
+      ));
     }
     if (!settingsResult.error && settingsResult.data) {
       setBorderPrice(String(settingsResult.data.border_addon_price));
