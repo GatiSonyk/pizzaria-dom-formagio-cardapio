@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
       }
     });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((event, nextSession) => {
       if (!active) return;
       setSession(nextSession);
       if (!nextSession) {
@@ -52,9 +52,15 @@ export function AuthProvider({ children }) {
         setLoading(false);
         return;
       }
-      // Avoid awaiting network calls inside the Auth callback.
-      setTimeout(() => { if (active) loadProfile(nextSession.user); }, 0);
-      setLoading(false);
+      if (event === "SIGNED_IN" || event === "INITIAL_SESSION" || event === "USER_UPDATED") {
+        // Keep protected routes in the loading state until the role query finishes.
+        setLoading(true);
+        setTimeout(async () => {
+          if (!active) return;
+          await loadProfile(nextSession.user);
+          if (active) setLoading(false);
+        }, 0);
+      }
     });
 
     return () => {
