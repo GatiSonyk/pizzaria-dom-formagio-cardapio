@@ -7,3 +7,10 @@
 .product-info>p{min-height:58px}
 .product-bottom small{max-width:190px;line-height:1.5}
 @media(max-width:600px){.border-option{margin-left:0;width:100%}.size-note{gap:7px}.product-info>p{min-height:72px}}
+
+
+/* Logo oficial Dom Formágio */
+.brand-logo{width:58px;height:58px;object-fit:cover;display:block;flex:none;border:1px solid #d4b36e;border-radius:7px;box-shadow:0 2px 7px #10291b18}
+.footer-brand .brand-logo{width:46px;height:46px}
+@media(max-width:800px){.brand-logo{width:46px;height:46px}}
+@media(max-width:430px){.brand-logo{width:36px;height:36px}}
