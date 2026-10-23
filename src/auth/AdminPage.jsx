@@ -4,7 +4,7 @@ import { ArrowLeft, Check, ImagePlus, LogOut, Plus, RefreshCw, Save, Trash2, Upl
 import { supabase } from "../lib/supabase.js";
 import { useAuth } from "./AuthProvider.jsx";
 
-const CATEGORIES = ["Tradicionais", "Especiais", "Doces", "Bebidas"];
+const CATEGORIES = ["Tradicionais", "Especiais", "Doces", "Bebidas", "Lanches", "Porções", "Combos"];
 const blankDraft = () => ({
   name: "", slug: "", category: "Tradicionais", description: "", image_url: "",
   price_large: "", price_medium: "", price_small: "", price_unit: "", is_available: true,
@@ -108,11 +108,14 @@ export default function AdminPage() {
         imageUrl = supabase.storage.from("product-images").getPublicUrl(storagePath).data.publicUrl;
       }
 
+      const hasPizzaSizes = ["Tradicionais", "Especiais", "Doces"].includes(draft.category);
       const payload = {
         slug, name: draft.name.trim(), category: draft.category,
         description: draft.description.trim(), image_url: imageUrl,
-        price_large: toAmount(draft.price_large), price_medium: toAmount(draft.price_medium),
-        price_small: toAmount(draft.price_small), price_unit: toAmount(draft.price_unit),
+        price_large: hasPizzaSizes ? toAmount(draft.price_large) : null,
+        price_medium: hasPizzaSizes ? toAmount(draft.price_medium) : null,
+        price_small: hasPizzaSizes ? toAmount(draft.price_small) : null,
+        price_unit: hasPizzaSizes ? null : toAmount(draft.price_unit),
         is_available: Boolean(draft.is_available),
       };
       let result;
@@ -223,13 +226,14 @@ export default function AdminPage() {
           </div>
 
           <div className="admin-section-title"><UtensilsCrossed size={18}/><h3>Preços (R$)</h3></div>
-          <p className="admin-muted">Deixe em branco os valores que ainda precisam ser confirmados. Bebidas podem usar o preço unitário.</p>
-          <div className="admin-form-grid price-grid">
+          <p className="admin-muted">{["Tradicionais", "Especiais", "Doces"].includes(draft.category) ? "Cadastre os preços de pizza por tamanho. Esses valores são usados no cálculo de pizzas com 1, 2 ou 3 sabores." : "Cadastre um único preço para cada lanche, porção, combo ou bebida."} Deixe em branco os valores que ainda precisam ser confirmados.</p>
+          {["Tradicionais", "Especiais", "Doces"].includes(draft.category) ? <div className="admin-form-grid price-grid">
             <label>Grande<input type="number" min="0" step="0.01" value={draft.price_large} onChange={(e) => setDraft({...draft,price_large:e.target.value})} placeholder="Não definido"/></label>
             <label>Média<input type="number" min="0" step="0.01" value={draft.price_medium} onChange={(e) => setDraft({...draft,price_medium:e.target.value})} placeholder="Não definido"/></label>
             <label>Pequena<input type="number" min="0" step="0.01" value={draft.price_small} onChange={(e) => setDraft({...draft,price_small:e.target.value})} placeholder="Não definido"/></label>
-            <label>Preço unitário<input type="number" min="0" step="0.01" value={draft.price_unit} onChange={(e) => setDraft({...draft,price_unit:e.target.value})} placeholder="Para bebidas ou preço único"/></label>
-          </div>
+          </div> : <div className="admin-form-grid price-grid">
+            <label>Preço unitário<input type="number" min="0" step="0.01" value={draft.price_unit} onChange={(e) => setDraft({...draft,price_unit:e.target.value})} placeholder="Ex.: 29,90"/></label>
+          </div>}
 
           <div className="admin-availability"><label><input type="checkbox" checked={draft.is_available} onChange={(e) => setDraft({...draft,is_available:e.target.checked})}/> Produto disponível no cardápio público</label><span className={draft.is_available ? "availability-pill on" : "availability-pill off"}>{draft.is_available ? "Disponível" : "Indisponível"}</span></div>
           <div className="admin-save-row"><button className="auth-submit" type="submit" disabled={saving}><Save size={17}/>{saving ? "Salvando…" : "Salvar produto"}</button><button type="button" className="admin-secondary" onClick={newProduct}>Cancelar</button></div>
