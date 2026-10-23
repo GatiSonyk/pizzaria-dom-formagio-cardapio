@@ -14,3 +14,29 @@
 .footer-brand .brand-logo{width:46px;height:46px}
 @media(max-width:800px){.brand-logo{width:46px;height:46px}}
 @media(max-width:430px){.brand-logo{width:36px;height:36px}}
+
+
+/* Personalização de pizza: quantidade de sabores e tipo de borda */
+.flavor-hint{margin-left:auto;color:#8a7954;font-size:10px}
+.pizza-config-backdrop{position:fixed;inset:0;z-index:120;background:#0b2019b8;display:flex;align-items:center;justify-content:center;padding:18px;overflow-y:auto;animation:fade .2s}
+.pizza-config{background:var(--cream);width:min(560px,100%);max-height:min(92vh,860px);overflow:auto;border:1px solid #e2d5b8;box-shadow:0 22px 70px #0004;animation:up .25s both}
+.pizza-config-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:22px 24px;border-bottom:1px solid #e5dccb;background:#f6f0e5}
+.pizza-config-head h2{font-size:30px;margin:7px 0}
+.pizza-config-head p{font-size:11px;line-height:1.6;color:#7a7a6c;margin:0}
+.pizza-config-body{padding:22px 24px;display:flex;flex-direction:column;gap:16px}
+.config-field{display:flex;flex-direction:column;gap:8px;color:#4e5d4a;font-size:11px;font-weight:700}
+.config-field select{width:100%;padding:12px 13px;border:1px solid #ded6c7;background:white;color:#294232;border-radius:3px;font-size:12px;outline-color:var(--gold)}
+.flavor-count-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.flavor-count{border:1px solid #dcd2be;background:white;color:#5e695b;padding:11px 8px;border-radius:3px;font-size:11px}
+.active-flavor-count{background:var(--green);border-color:var(--green);color:white}
+.field-hint{font-size:10px;font-weight:400;color:#857f70;line-height:1.5}
+.pizza-price-preview{background:#f2ead9;border:1px solid #e1d0aa;padding:14px 16px}
+.pizza-price-preview>div{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#66532e;font-size:11px}
+.pizza-price-preview strong{font-size:22px;color:var(--green)}
+.pizza-price-preview p{margin:7px 0 0;color:#7c725d;font-size:10px;line-height:1.6}
+.pizza-config-actions{display:flex;justify-content:flex-end;gap:10px;align-items:center}
+.cancel-config{padding:13px 18px;border:1px solid #ded6c7;background:transparent;color:#475848;border-radius:3px;font-size:11px}
+.pizza-config-actions .gold-button{padding:13px 17px}
+.pizza-config-actions .gold-button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.flavor-rule{font-size:10px;color:#858276;line-height:1.6}
+@media(max-width:600px){.flavor-hint{width:100%;margin:5px 0 0}.pizza-config-backdrop{padding:10px;align-items:flex-start}.pizza-config{max-height:calc(100vh - 20px);margin:auto 0}.pizza-config-head{padding:18px}.pizza-config-body{padding:18px}.pizza-config-head h2{font-size:26px}.pizza-config-actions{flex-direction:column-reverse;align-items:stretch}.pizza-config-actions button{width:100%}}
